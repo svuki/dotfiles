@@ -32,7 +32,6 @@
 ;;     (quelpa-self-upgrade)))
 ;; (require 'quelpa-use-package)
 (require 'use-package)
-
 ;; Make org-mode src block indentation behave as expected
 (setq org-src-preserve-indentation t)
 (setq org-todo-keywords
@@ -41,7 +40,10 @@
 
 (use-package org-modern
   :ensure t
-  :init (global-org-modern-mode))
+  :init (global-org-modern-mode)
+  :config
+  (setq org-agenda-files (directory-files-recursively "~/PARA/resources" "\\.org$"))
+  (visual-line-mode))
   
 (use-package evil
   :ensure t
@@ -63,6 +65,7 @@
   :hook (prog-mode . hs-minor-mode)
   :config
   (with-eval-after-load 'evil
+    (define-key evil-normal-state-map (kbd "z l") 'hs-hide-level)
     (define-key evil-normal-state-map (kbd "z c") 'hs-hide-block)
     (define-key evil-normal-state-map (kbd "z o") 'hs-show-block)
     (define-key evil-normal-state-map (kbd "z M") 'hs-hide-all)
@@ -151,11 +154,16 @@
 (use-package multiple-cursors
   :ensure t)
 
-
 (use-package typescript-mode
   :ensure t
-  :mode ("\\.ts\\'" . typescript-ts-mode))
+  :mode ("\\.ts\\'" . typescript-ts-mode)
+  :init
+  (add-hook 'typescript-mode-hook #'auto-revert-mode))
 
+(use-package tsx-ts-mode
+  :mode ("\\.tsx\\'" . tsx-ts-mode)
+  :init
+  (add-hook 'tsx-ts-mode-hook #'auto-revert-mode))
 
 (use-package apheleia
   :ensure t
@@ -220,6 +228,10 @@
   :ensure t
   :mode ("\\.js\\'" . rjsx-mode))
 
+;; Home baked addiitons
+(load-file "/home/stefan/PARA/projects/emacs-vitest-runer/vitest.el")
+(require 'vitest)
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -244,6 +256,8 @@
  '(jdee-db-requested-breakpoint-face-colors (cons "#100E23" "#95FFA4"))
  '(jdee-db-spec-breakpoint-face-colors (cons "#100E23" "#565575"))
  '(objed-cursor-color "#FF8080")
+ '(org-agenda-files
+   '("/home/stefan/PARA/archive/arachne/README.org" "/home/stefan/PARA/archive/dolos/lisp/README.org" "/home/stefan/PARA/archive/hermes.lisp/README.org" "/home/stefan/PARA/archive/project/cram-incremental-reading/README.org" "/home/stefan/PARA/archive/project/cramv3/notes/blocknote.org" "/home/stefan/PARA/archive/project/cramv3/notes/design.org" "/home/stefan/PARA/archive/project/cramv3/notes/incremental-reading.org" "/home/stefan/PARA/archive/ocaml_journey.org" "/home/stefan/PARA/areas/devnotes/scrawls/2024_04_01_notes_on_learning_clojure.org" "/home/stefan/PARA/areas/devnotes/scrawls/2024_04_12_notes_on_real_analysis.org" "/home/stefan/PARA/areas/devnotes/scrawls/2024_04_13_more_real_analysis.org" "/home/stefan/PARA/areas/devnotes/scrawls/2024_06_10_bottom_up_top_down_applications_and_libraries.org" "/home/stefan/PARA/areas/devnotes/scrawls/2024_06_10_parent_child_patterns.org" "/home/stefan/PARA/areas/devnotes/scrawls/2024_06_12_event_systems.org" "/home/stefan/PARA/areas/devnotes/scrawls/2024_06_13_eventual_consistency_and_products.org" "/home/stefan/PARA/areas/devnotes/scrawls/2024_07_10_async_function_pitfalls.org" "/home/stefan/PARA/areas/devnotes/scrawls/2024_07_10_the_problem_with_frontend_development.org" "/home/stefan/PARA/areas/devnotes/stackspace/2024-07-20.org" "/home/stefan/PARA/areas/writing/a_journey_through_fire_island.org" "/home/stefan/PARA/areas/writing/ok.org" "/home/stefan/PARA/areas/writing/on_plot.org" "/home/stefan/PARA/projects/loki/README.org" "/home/stefan/PARA/projects/loki/todo.org" "/home/stefan/PARA/projects/stackspace/design-docs/search.org" "/home/stefan/PARA/projects/stackspace/design-docs/zettle.org" "/home/stefan/PARA/projects/stackspace/design-docs/zettle2.org" "/home/stefan/PARA/resources/document-notes/designing-data-intensive-applications.org" "/home/stefan/PARA/resources/document-notes/how-to-take-smart-notes.org" "/home/stefan/PARA/resources/document-notes/prosemirror-guide.org" "/home/stefan/PARA/resources/document-notes/react-ui-testing.org" "/home/stefan/PARA/resources/document-notes/tip-tap-docs.org" "/home/stefan/PARA/resources/notes/lang/css/custom-properties.org" "/home/stefan/PARA/resources/notes/lang/css/pseudo-classes.org" "/home/stefan/PARA/resources/notes/lang/elisp/aOverview.org" "/home/stefan/PARA/resources/notes/lang/elisp/managing-processes.org" "/home/stefan/PARA/resources/notes/lang/elisp/writing-a-major-mode.org" "/home/stefan/PARA/resources/notes/lang/typescript/declare.org" "/home/stefan/PARA/resources/notes/lang/typescript/functions.org" "/home/stefan/PARA/resources/notes/lang/typescript/new-project.org" "/home/stefan/PARA/resources/notes/lang/typescript/tips-and-tricks.org" "/home/stefan/PARA/resources/notes/lang/typescript/vitest.org" "/home/stefan/PARA/resources/notes/lib/react/aOverview.org" "/home/stefan/PARA/resources/notes/lib/react/context.org" "/home/stefan/PARA/resources/notes/lib/react/hooks.org" "/home/stefan/PARA/resources/notes/lib/react/integratingWithExternalState.org" "/home/stefan/PARA/resources/notes/lib/react/portal.org" "/home/stefan/PARA/resources/notes/lib/react/testing.org" "/home/stefan/PARA/resources/notes/lib/tiptap/linking-two-editors.org" "/home/stefan/PARA/resources/notes/lib/tiptap/mentons.org" "/home/stefan/PARA/resources/notes/lib/tiptap/rendering-notes-with-react.org" "/home/stefan/PARA/resources/notes/lib/zustand.org" "/home/stefan/PARA/resources/notes/linux/write-persistence.org" "/home/stefan/PARA/resources/notes/search/prefix.org" "/home/stefan/PARA/resources/notes/tanstack_router.org" "/home/stefan/PARA/resources/notes/zustand_router.org" "/home/stefan/PARA/resources/programming-languages/clojure.org" "/home/stefan/PARA/resources/programming-languages/ocaml.org" "/home/stefan/PARA/resources/programming-languages/python.org" "/home/stefan/PARA/resources/scrawls/2024-07-29.org" "/home/stefan/PARA/resources/wiki/csplit.org" "/home/stefan/PARA/resources/devlog.org" "/home/stefan/PARA/resources/todo.org"))
  '(org-format-latex-options
    '(:foreground default :background default :scale 2.5 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers
 		 ("begin" "$1" "$" "$$" "\\(" "\\[")))
